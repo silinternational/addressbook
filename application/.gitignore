@@ -1,0 +1,6 @@
+*.lock
+nbproject/private/
+.DS_Store
+vendor/
+*.local.php
+phpinfo.php

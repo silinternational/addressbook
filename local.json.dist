@@ -1,0 +1,37 @@
+{
+  "hosts_file": {
+      "custom_entries": {
+          "": ""
+      }
+  },
+  "deploy": {
+    "addressbook": {
+      "simplesamlphp": {
+        "crt": "",
+        "pem": "",
+        "authsources": {
+            "idp": ""
+        },
+        "metadata": {
+            "idp": "insite.dev.iidp.net",
+            "SingleSignOnService": "",
+            "SingleLogoutService": "",
+            "certData": "",
+            "orgName": "",
+            "orgUrl": ""
+        }
+      },
+      "config_files": {
+          "local": {
+              "content": {
+                 "params": {
+                     "apiBaseUrl": "",
+                     "apiKey": "",
+                     "apiSecret": ""
+                 }
+             }
+          }
+      }
+    }
+  }
+}

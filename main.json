@@ -1,0 +1,90 @@
+{
+  "yum": {
+    "epel": {
+      "managed": true,
+      "enabled": true
+    }
+  },
+  "php": {
+    "directives": {
+      "date.timezone": "America/New_York"
+    }
+  },
+  "apache": {
+    "default_modules": [
+      "alias","auth_basic","authn_file","authz_default","authz_groupfile",
+      "authz_host","authz_user","autoindex","deflate","dir","env","headers",
+      "log_config","logio","mime","negotiation","php5","rewrite","setenvif",
+      "ssl","status"
+    ]
+  },
+  "hosts_file": {
+      "custom_entries": {
+          "192.168.34.10": "extdir-api.local"
+      }
+  },
+  "vhost": {
+    "server_name": "addressbook.local",
+    "docroot": "/var/lib/addressbook/public/",
+    "allow_override": "All",
+    "port": "443",
+    "ssl": {
+          "enabled": true,
+          "cert_path": "/etc/httpd/ssl",
+          "cert_content": "-----BEGIN CERTIFICATE-----\nMIIE/DCCA+SgAwIBAgIQWVBw6CGu1AsWyLPBOw6ynjANBgkqhkiG9w0BAQUFADBe\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMVGhhd3RlLCBJbmMuMR0wGwYDVQQLExRE\nb21haW4gVmFsaWRhdGVkIFNTTDEZMBcGA1UEAxMQVGhhd3RlIERWIFNTTCBDQTAe\nFw0xMzExMTgwMDAwMDBaFw0xNTExMTgyMzU5NTlaMIGhMTswOQYDVQQLEzJHbyB0\nbyBodHRwczovL3d3dy50aGF3dGUuY29tL3JlcG9zaXRvcnkvaW5kZXguaHRtbDEi\nMCAGA1UECxMZVGhhd3RlIFNTTDEyMyBjZXJ0aWZpY2F0ZTEZMBcGA1UECxMQRG9t\nYWluIFZhbGlkYXRlZDEjMCEGA1UEAxQaYWRkcmVzc2Jvb2suaW5zaXRlaG9tZS5v\ncmcwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC5uXoMznF/qudq+lSR\nrABd4AXz2u8yh7RG639F/JMPEmaW+78lcKgyF0mQiDEMoPWFf/HOu+NWfhxE0w91\nYaCUJgsX3eWA01XjNr8dGgQiLyygoenwl7LtndpubZgpK8j0CG6XAIRbzpDAy8MZ\n+6Yh7gRewPoiz90l3ks7DUsSUY4xBVZndwT04bL2aC6Cmkmmd19MseZAqJZokEXJ\nnE2eKR5h2QeWbBss42urA5Ah1ZCBro3iLWif5SupeFnWynn+nj0a2SzDAuqilHWh\nJaZNFFW4/CJezUnbzet8CXg/Y6Sm3qWB8hSow7Nsg/6T0nSXjfu/7XccxCnAMW9f\nhHfTAgMBAAGjggFwMIIBbDAlBgNVHREEHjAcghphZGRyZXNzYm9vay5pbnNpdGVo\nb21lLm9yZzAJBgNVHRMEAjAAMDoGA1UdHwQzMDEwL6AtoCuGKWh0dHA6Ly9zdnIt\nZHYtY3JsLnRoYXd0ZS5jb20vVGhhd3RlRFYuY3JsMEEGA1UdIAQ6MDgwNgYKYIZI\nAYb4RQEHNjAoMCYGCCsGAQUFBwIBFhpodHRwczovL3d3dy50aGF3dGUuY29tL2Nw\nczAfBgNVHSMEGDAWgBSrRORd7IPH2cCFn/fhxpeQsIw/mDAOBgNVHQ8BAf8EBAMC\nBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMGkGCCsGAQUFBwEBBF0w\nWzAiBggrBgEFBQcwAYYWaHR0cDovL29jc3AudGhhd3RlLmNvbTA1BggrBgEFBQcw\nAoYpaHR0cDovL3N2ci1kdi1haWEudGhhd3RlLmNvbS9UaGF3dGVEVi5jZXIwDQYJ\nKoZIhvcNAQEFBQADggEBAGUVNfXAslA1arHhWWViIhQoGwcOEAQYlnY5INKz5ous\nZVHddEYSkD0tNX2zer4NKcVPsZ5ThfUT7RTJitWEnsEsKYENvZs/xneplY4OJrdX\nxi97llJDdTom55sSq/f/hhTvat3yCScqK6QQvhksQHhhCicayaTl/uCLPPpO2AdK\nE9vyZpstqIHT7GNPwX0WjgeBlFI9NhbEbQpNwiY/hkdRdm95WBKK7uOcepeW0EgT\nNwZRuPMd9npt/L+YXkpOpE7kDeL6ou+AewRHuvQuuuhZ7vmvfo0RiG7eH6WNdO27\nwRL0NNk1YdtN5FE3ghesrKOYdkUV29T+4CHMltE5RyA=\n-----END CERTIFICATE-----",
+          "key_path": "/etc/httpd/ssl",
+          "key_content": "-----BEGIN RSA PRIVATE KEY-----\nMIIEpAIBAAKCAQEAubl6DM5xf6rnavpUkawAXeAF89rvMoe0Rut/RfyTDxJmlvu/\nJXCoMhdJkIgxDKD1hX/xzrvjVn4cRNMPdWGglCYLF93lgNNV4za/HRoEIi8soKHp\n8Jey7Z3abm2YKSvI9AhulwCEW86QwMvDGfumIe4EXsD6Is/dJd5LOw1LElGOMQVW\nZ3cE9OGy9mgugppJpndfTLHmQKiWaJBFyZxNnikeYdkHlmwbLONrqwOQIdWQga6N\n4i1on+UrqXhZ1sp5/p49GtkswwLqopR1oSWmTRRVuPwiXs1J283rfAl4P2Okpt6l\ngfIUqMOzbIP+k9J0l437v+13HMQpwDFvX4R30wIDAQABAoIBADZanemZkYX3knqw\ngIeRexn+Mj/H1zFGnfATg9ALt0416GhPjQV8Dv1560GtWg2EHdbQNwh13Ha3ubY6\nvs9vnvs8lwqJGl21e/FfWFdAAe2vOLRaLokHHIqGJCMlV97UvZ8NyK/QquvjbGHA\nQH0eNOTBL+47M/l0NBidEg9aOJpHW4oAFx9mjObSuRnjLcMxKvZrhSccUvmdOY9x\nKOFDCT6u1NMBdzCCWICPSkRkpn8v3jwFgjRngJQ18P5JaXzH4a/IKBUXb+8rOQjX\ncmRxYWpYzHcalXKZ1I426igCL5iTSzV6Olum2w9W82lj57nPYfGUjriFOoNEt0A/\n2Teb86ECgYEA9IMdc98qNQ29mwISH/8Ee3CsVgue6e+mi6ugFT2CO41MiMaWPE4m\n+5pqGaVrhsI0k4ts2Gj1pIhlmZAelS3wOQMJ4KNeZCf1948aeEktOS7ezhZiFQvA\nFet/V2zLpiskTb35sy7RxSXQBzLPe37Q0bOCNF7KVnz8sg/fcaWtu/UCgYEAwnNK\nKLE6Hzh1Ferh8L6lyx57fgi6pwdGcbdnIstDF9zAxnx6cw6yPKFfSEGCv85Fx+UR\noQ2rclttxq8gwHdKEhyaSgfnM++hQuRGNmr623oCL33GrYdh45Z13h/XRAcTPjvX\ncP3ZDbUA+7eNT0WaK/sTn3vHawqslErXBEzNj6cCgYBz4MuNhX7IQ+nO021pkn86\nTQyvfrRiY7wHR2AHkO3ucSmLTKoYjGU3KlgMLXRHGjS2lAYSjbOUtTuJSl7kDjBh\npIoC1wm9555PI5fE19FB32+iNcNn+/idqszfzuS4rIt4+IalH5Q0nZX4Q2FHQrOO\nHkefsCiuUm+jp5gakQ1EHQKBgQCryod+I/Whl5N55aXvt79qEGgyFSwyXO8TkGEC\nEGoaLuHxehAEjrtRbZBsmdQV+PsVe39ztkv+IGB/5EEfSUSbc8GsHgdZjx/9pQeT\nFDjEpqo/ovNgY/dLxqYjtCXO6CFMHjpcjSiyP3O675NcsbVfndbcU9L+8tM9wFDu\nb5w8iQKBgQCaC/6uQwHGP6dDrUn8zjpZxenCB/DL6p7+6vW4VvdJ6/VeVrOtDY4+\nUh5RTJcsJWKZe3m7L+Wn3WZXB3QFgUQa6HoiYAfALyuvG1kyeJe1dPZ235gw2d3+\nPpXrDatJAf1xO8OTnuYcDtBE8RlcR7Ns8ACvhmCoTjk9w+LAUSonZg==\n-----END RSA PRIVATE KEY-----",
+          "intermediate_cert_file": "/etc/httpd/ssl/thawte_dv_ssa_ca.crt",
+          "intermediate_cert_content": "-----BEGIN CERTIFICATE-----\nMIIEjzCCA3egAwIBAgIQdhASihe2grs6H50amjXAkjANBgkqhkiG9w0BAQUFADCB\nqTELMAkGA1UEBhMCVVMxFTATBgNVBAoTDHRoYXd0ZSwgSW5jLjEoMCYGA1UECxMf\nQ2VydGlmaWNhdGlvbiBTZXJ2aWNlcyBEaXZpc2lvbjE4MDYGA1UECxMvKGMpIDIw\nMDYgdGhhd3RlLCBJbmMuIC0gRm9yIGF1dGhvcml6ZWQgdXNlIG9ubHkxHzAdBgNV\nBAMTFnRoYXd0ZSBQcmltYXJ5IFJvb3QgQ0EwHhcNMTAwMjE4MDAwMDAwWhcNMjAw\nMjE3MjM1OTU5WjBeMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMVGhhd3RlLCBJbmMu\nMR0wGwYDVQQLExREb21haW4gVmFsaWRhdGVkIFNTTDEZMBcGA1UEAxMQVGhhd3Rl\nIERWIFNTTCBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMuYyTY/\n0pzYFgfUSWP5g7DoAi3MXFp0l6YT7xMT3gV8p+bKACPaOfnvE89Sxa+a48q+84LZ\niz2q4cyuiFBmoy3sYRR1SasOJPGsRFsLKKIzIHYeBmBqZwVxi7pmYhZ6s20Nx9CU\nQMaMPR6SDGI0DUSJ1feJ/intGI/2mysI92qr2EiXWvSf7Qx1UiL31V6EAJ/ASg0x\nd0xk0BLmDzrwocDVXB3nXy3C99Y2GNmVbkROyVgUTbaOu83eYh76W7W9GCuYrKyT\nP1Ba9RQLos+2855PWs1awzYj2hqvsE3WSiIDj0MCGb3qrN3EejUyFPFyLghVQAz0\nB0FBrzg3hClCslUCAwEAAaOB/DCB+TAyBggrBgEFBQcBAQQmMCQwIgYIKwYBBQUH\nMAGGFmh0dHA6Ly9vY3NwLnRoYXd0ZS5jb20wEgYDVR0TAQH/BAgwBgEB/wIBADA0\nBgNVHR8ELTArMCmgJ6AlhiNodHRwOi8vY3JsLnRoYXd0ZS5jb20vVGhhd3RlUENB\nLmNybDAOBgNVHQ8BAf8EBAMCAQYwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVZl\ncmlTaWduTVBLSS0yLTExMB0GA1UdDgQWBBSrRORd7IPH2cCFn/fhxpeQsIw/mDAf\nBgNVHSMEGDAWgBR7W0XPr87Lev0xkhpqtvNG61dIUDANBgkqhkiG9w0BAQUFAAOC\nAQEABLr7rLv8S1QRoy2Iszy9AG2KGraNxMGD+MdTKsEybjqBoVR92ho/OkVPNudC\nsApChZegrPvlh6eDT+ixt5tYZW4mgAuSTUdVuWEWUWXpK/Fo2Vi4A4HRt2Yc07zF\npntfPsU4RnbndbSgDEvOosKpwcw2c3v7uSQkoF6n9vq7DChDnh3wTvA/2CSwIdxt\nLe6/Wjv6iJx0bK8h3ZLswxXvlHUmRtamP79mSKod790n5rdRiTh9E4QMQPzQtfHg\n2/lPL0ActI5HImG4TJbe8F8Rfk8R2exQRyIOxR3iZEnnaGNFOorZcfRe8W63FE0+\nbxQe3FL+vN8MvSk/dvsRX2hoFQ==\n-----END CERTIFICATE-----"
+    }
+  },
+  "deploy": {
+    "addressbook": {
+      "deploy_to": "/var/lib/addressbook",
+      "aws_extra_path": "",
+      "owner": "root",
+      "group": "root",
+      "config_path": "protected/config",
+      "yii_dir": "protected",
+      "composer": {
+        "dir": "",
+        "self_update": true,
+        "as_update": false
+      },
+      "simplesamlphp": {
+        "path": "simplesamlphp",
+        "crt": "",
+        "pem": "",
+        "authsources": {
+            "idp": ""
+        },
+        "config": {
+            "adminpassword": "2UnEuRn5PRMp",
+            "secretsalt": "af8204dca9ccbfe65d026874d20afa4d",
+            "name": "Tech Admin",
+            "email": "techadmin@domain.com"
+        },
+        "metadata": {
+            "idp": "",
+            "SingleSignOnService": "",
+            "SingleLogoutService": "",
+            "certData": "",
+            "orgName": "",
+            "orgUrl": ""
+        }
+      },
+      "config_files": {
+          "local": {
+              "filename": "local.php",
+              "content": {
+                 "params": {
+                     "apiBaseUrl": "",
+                     "apiKey": "",
+                     "apiSecret": ""
+                 }
+             }
+          }
+      }
+    }
+  }
+}
