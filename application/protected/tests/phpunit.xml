@@ -6,7 +6,7 @@
          stopOnFailure="true">
 
     <testsuites>
-        <testsuite name="eddy">
+        <testsuite name="unit">
             <directory>./unit</directory>
         </testsuite>
     </testsuites>

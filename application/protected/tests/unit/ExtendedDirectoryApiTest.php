@@ -37,7 +37,7 @@ class ExtendedDirectoryApiTest extends CTestCase
         // Make sure an exception is thrown by Guzzle which includes the API
         // base URL followed by a question mark (which it should always).
         $this->setExpectedException(
-            'Guzzle\Http\Exception\CurlException',
+            'Guzzle\Http\Exception\ClientErrorResponseException',
             $apiBaseUrl . '?'
         );
         
@@ -55,7 +55,7 @@ class ExtendedDirectoryApiTest extends CTestCase
         // Make sure an exception is thrown by Guzzle which includes the name of
         // the query string variable that would hold the API key.
         $this->setExpectedException(
-            'Guzzle\Http\Exception\CurlException',
+            'Guzzle\Http\Exception\ClientErrorResponseException',
             'api_key'
         );
         
@@ -74,7 +74,7 @@ class ExtendedDirectoryApiTest extends CTestCase
         // Make sure an exception is thrown by Guzzle which includes the name of
         // the query string variable that would hold the signature.
         $this->setExpectedException(
-            'Guzzle\Http\Exception\CurlException',
+            'Guzzle\Http\Exception\ClientErrorResponseException',
             'api_sig'
         );
         
