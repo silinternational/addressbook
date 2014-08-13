@@ -31,13 +31,13 @@ class ExtendedDirectoryApiTest extends CTestCase
     public function testDoBasicSearch()
     {
         // Arrange
-        $apiBaseUrl = 'http://localhost/';
+        $apiBaseUrl = 'http://notarealdomain/';
         $extDirApi = new ExtendedDirectoryApi($apiBaseUrl);
 
         // Make sure an exception is thrown by Guzzle which includes the API
         // base URL followed by a question mark (which it should always).
         $this->setExpectedException(
-            'Guzzle\Http\Exception\ClientErrorResponseException',
+            'Guzzle\Http\Exception\CurlException',
             $apiBaseUrl . '?'
         );
         
@@ -48,14 +48,14 @@ class ExtendedDirectoryApiTest extends CTestCase
     public function testDoBasicSearchWithApiKey()
     {
         // Arrange
-        $apiBaseUrl = 'http://localhost/';
+        $apiBaseUrl = 'http://notarealdomain/';
         $apiKey = 'abc';
         $extDirApi = new ExtendedDirectoryApi($apiBaseUrl, $apiKey);
 
         // Make sure an exception is thrown by Guzzle which includes the name of
         // the query string variable that would hold the API key.
         $this->setExpectedException(
-            'Guzzle\Http\Exception\ClientErrorResponseException',
+            'Guzzle\Http\Exception\CurlException',
             'api_key'
         );
         
@@ -66,7 +66,7 @@ class ExtendedDirectoryApiTest extends CTestCase
     public function testDoBasicSearchWithApiKeyAndSecret()
     {
         // Arrange
-        $apiBaseUrl = 'http://localhost/';
+        $apiBaseUrl = 'http://notarealdomain/';
         $apiKey = 'abc';
         $apiSecret = 'def';
         $extDirApi = new ExtendedDirectoryApi($apiBaseUrl, $apiKey, $apiSecret);
@@ -74,7 +74,7 @@ class ExtendedDirectoryApiTest extends CTestCase
         // Make sure an exception is thrown by Guzzle which includes the name of
         // the query string variable that would hold the signature.
         $this->setExpectedException(
-            'Guzzle\Http\Exception\ClientErrorResponseException',
+            'Guzzle\Http\Exception\CurlException',
             'api_sig'
         );
         
