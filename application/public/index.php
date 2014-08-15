@@ -1,5 +1,9 @@
 <?php
 
+// Set the internal encoding used by the mb_* functions.
+mb_internal_encoding("UTF-8");
+setlocale(LC_CTYPE, 'es_US.utf8');
+
 // Change the following paths if necessary.
 $yii = dirname(__FILE__).'/../vendor/yiisoft/yii/framework/yii.php';
 
