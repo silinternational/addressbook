@@ -122,7 +122,7 @@ class ExtendedDirectoryApi extends CComponent
             $response = \Guzzle\Http\StaticClient::get($this->apiBaseUrl, array(
                 'query' => $values + $extraQueryParams,
                 'timeout' => 10,
-                'verify' => __DIR__ . '/../data/ca-bundle.crt',
+                'verify' => false,//__DIR__ . '/../data/ca-bundle.crt',
             ));
         }
         // Try to return a more understandable error for timeouts.
