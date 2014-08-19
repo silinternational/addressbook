@@ -1,6 +1,6 @@
 # Address Book - Extended Directory GUI #
 [ ![Codeship Status for silinternational/addressbook](https://codeship.io/projects/1c70f900-0529-0132-a8fd-2613281a1d2c/status)](https://codeship.io/projects/30816)
-
+ - added note
 ## Purpose ##
 This is intended to be a straight-forward web-based front-end for the Extended 
 Directory API that supports both full browsers and mobile browsers.
