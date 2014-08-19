@@ -104,6 +104,9 @@ class SearchForm extends CFormModel
         
         // If the input is now an empty string, simply return as-is.
         if ($input === '') return '';
+
+        // Transliterate $input to convert UTF-8 to ASCII to search LDAP
+        $input = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $input);
         
         // Otherwise, remove all illegal characters and return the result. In
         // this case, we're using a regex to remove all characters that are NOT
