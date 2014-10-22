@@ -86,7 +86,11 @@ class ExtDirSamlUserIdentity extends CUserIdentity
      */
     public function getLoginUrl($return = null)
     {
-        return $this->auth->getLoginURL($return);
+        $loginUrl = $this->auth->getLoginURL($return);
+        if(isset($this->config['force_ssl']) && $this->config['force_ssl']){
+            $loginUrl = preg_replace('/http([:%])/','https$1',$loginUrl);
+        }
+        return $loginUrl;
     }
     
     /**
