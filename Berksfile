@@ -1,16 +1,31 @@
 source "https://api.berkshelf.com"
 
-def opsworks_cookbook(name, version = '>= 0.0.0', options = {})
-  cookbook name, version, { path: "~/code/opsworks-cookbooks/#{name}" }.merge(options)
+def sil_cookbook(name, version = '>= 0.0.0', options = {})
+  cookbook name, version, github: "silinternational/opsworks-cookbooks", rel: name, branch: "release-chef-11.10"
 end
 
-cookbook "yum", github: "opscode-cookbooks/yum"
-cookbook "yum-epel", github: "opscode-cookbooks/yum-epel"
-cookbook "perl", github: "opscode-cookbooks/perl"
-cookbook "php", github: "opscode-cookbooks/php"
-cookbook "apache2", github: "onehealth-cookbooks/apache2"
-cookbook "addressbook", github: "silinternational/chef-cookbooks", rel: "addressbook"
-cookbook "silphp", github: "silinternational/chef-cookbooks", rel: "silphp"
-cookbook "silapache2", github: "silinternational/chef-cookbooks", rel: "silapache2"
-cookbook "simplesamlphp", github: "silinternational/chef-cookbooks", rel: "simplesamlphp"
-cookbook "hosts_file", github: "hw-cookbooks/hosts_file"
+cookbook "perl",            github: "opscode-cookbooks/perl"
+cookbook "mysql",           github: "opscode-cookbooks/mysql"
+cookbook "hosts_file",      github: "hw-cookbooks/hosts_file"
+
+sil_cookbook "gem_support"
+sil_cookbook "opsworks_initial_setup"
+sil_cookbook "dependencies"
+sil_cookbook "opsworks_commons"
+sil_cookbook "opsworks_nodejs"
+sil_cookbook "opsworks_bundler"
+sil_cookbook "opsworks_rubygems"
+sil_cookbook "packages"
+sil_cookbook "ruby"
+sil_cookbook "deploy"
+sil_cookbook "scm_helper"
+sil_cookbook "ssh_users"
+sil_cookbook "opsworks_agent_monit"
+sil_cookbook "opsworks_java"
+sil_cookbook "opsworks_aws_flow_ruby"
+sil_cookbook "mod_php5_apache2"
+sil_cookbook "apache2"
+sil_cookbook "php"
+sil_cookbook "simplesamlphp"
+sil_cookbook "describingsil"
+sil_cookbook "addressbook"

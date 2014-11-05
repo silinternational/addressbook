@@ -13,13 +13,13 @@ Vagrant.configure("2") do |config|
     # options are documented and commented below. For a complete reference,
     # please see the online documentation at vagrantup.com.
 
-    config.vm.box = "fillup/centos-6.5-x86_64-minimal"
+    config.vm.box = "ubuntu/trusty64"
 
     # Make sure Chef is installed
     config.omnibus.chef_version = :latest
 
     config.vm.network :private_network, ip: "192.168.34.11"
-    config.vm.synced_folder "application/", "/var/lib/addressbook", owner: "apache", group: "apache"
+    config.vm.synced_folder "application/", "/var/lib/addressbook", owner: "www-data", group: "www-data"
 
     config.vm.provider "virtualbox" do |vb|
       # Fix dns resolution speed issues: http://serverfault.com/questions/453185/vagrant-virtualbox-dns-10-0-2-3-not-working?rq=1
@@ -30,16 +30,18 @@ Vagrant.configure("2") do |config|
     config.berkshelf.enabled = true
 
     config.vm.provision :chef_solo do | chef |
-        chef.add_recipe "yum"
-        chef.add_recipe "yum-epel"
         chef.add_recipe "perl"
+        chef.add_recipe "opsworks_initial_setup"
+        chef.add_recipe "mod_php5_apache2"
         chef.add_recipe "apache2"
+        chef.add_recipe "apache2::mod_php5"
+        chef.add_recipe "apache2::deploy_vhosts"
         chef.add_recipe "hosts_file"
         chef.add_recipe "hosts_file::custom_entries"
         chef.add_recipe "php::ini"
         chef.add_recipe "addressbook"
-        chef.add_recipe "silphp::configure"
-        chef.add_recipe "silphp::composer"
+        chef.add_recipe "php::configure"
+        chef.add_recipe "php::composer"
         chef.add_recipe "simplesamlphp::configure"
 
         # Load JSON data from files main.json and then overwrite/merge values from local.json

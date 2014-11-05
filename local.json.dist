@@ -27,7 +27,11 @@
                  "params": {
                      "apiBaseUrl": "",
                      "apiKey": "",
-                     "apiSecret": ""
+                     "apiSecret": "",
+                     "google_analytics": {
+                         "enabled": true,
+                         "tracking_id": "UA-########-#"
+                     }
                  }
              }
           }
