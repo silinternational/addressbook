@@ -146,6 +146,42 @@ class SiteController extends Controller {
         }
     }
 
+    public function actionVcard()
+    {
+        $email = Yii::app()->request->getParam('email',false);
+        if(!$email){
+            Yii::app()->user->setFlash('danger','Unable to generate vCard file, email address missing.');
+            $this->redirect('/');
+        }
+
+        try {
+
+            // Create an instance of our object for interacting with the
+            // API, specifying the base-url for the API.
+            $extDirApi = new ExtendedDirectoryApi(
+                Yii::app()->params['apiBaseUrl'],
+                Yii::app()->params['apiKey'],
+                Yii::app()->params['apiSecret']
+            );
+
+            $results = $extDirApi->doAdvancedSearch(null,null,$email,null,true);
+            if($results){
+                $vcard = new Sabre\VObject\Component\VCard(array(
+                    'FN' => CHtml::encode($results['first'].' '.$results['last']),
+                    'TITLE' => CHtml::encode($results['title']),
+                    /**
+                     * Finish adding attributes here
+                     * ran out of time...
+                     */
+
+                ));
+            }
+
+        } catch(\Exception $e) {
+
+        }
+    }
+
     /**
      * This action checks the application's ability to connect to the,
      * Extended Directory API.

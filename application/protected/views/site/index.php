@@ -257,6 +257,8 @@ if (!is_null($results)) {
                                     <button class="copy-button btn btn-default btn-mini"
                                             data-clipboard-text="<?php echo $fullDetails; ?>"
                                             title="Copy Contact Details">Copy</button>
+                                    &nbsp;
+                                    <a href="<?php echo Yii::app()->createAbsoluteUrl('/site/vcard',array('email' => CHtml::encode($result['email']))); ?>"><i class="icon-user"></i> vCard</a>
                                 </td>
                             </tr>
                             <?php
