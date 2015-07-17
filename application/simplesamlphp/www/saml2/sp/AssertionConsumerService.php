@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * WARNING:
+ *
+ * THIS FILE IS DEPRECATED AND WILL BE REMOVED IN FUTURE VERSIONS
+ *
+ * @deprecated
+ */
+
 require_once('../../_include.php');
 
 /**
@@ -8,16 +16,17 @@ require_once('../../_include.php');
  *
  * @author Andreas Aakre Solberg, UNINETT AS. <andreas.solberg@uninett.no>
  * @package simpleSAMLphp
- * @version $Id: AssertionConsumerService.php 2642 2010-11-16 14:31:18Z olavmrk $
  * @abstract
  */
 
 $config = SimpleSAML_Configuration::getInstance();
 
+SimpleSAML_Logger::warning('The file saml2/sp/AssertionConsumerService.php is deprecated and will be removed in future versions.');
+
 /* Get the session object for the user. Create a new session if no session
  * exists for this user.
  */
-$session = SimpleSAML_Session::getInstance();
+$session = SimpleSAML_Session::getSessionFromRequest();
 
 
 /**
@@ -47,7 +56,7 @@ function finishLogin($authProcState) {
 	global $session;
 	$session->doLogin('saml2', $authData);
 
-	SimpleSAML_Utilities::redirect($authProcState['core:saml20-sp:TargetURL']);
+	SimpleSAML_Utilities::redirectTrustedURL($authProcState['core:saml20-sp:TargetURL']);
 }
 
 SimpleSAML_Logger::info('SAML2.0 - SP.AssertionConsumerService: Accessing SAML 2.0 SP endpoint AssertionConsumerService');
@@ -59,6 +68,13 @@ if (array_key_exists(SimpleSAML_Auth_ProcessingChain::AUTHPARAM, $_REQUEST)) {
 	/* We have returned from the authentication processing filters. */
 
 	$authProcId = $_REQUEST[SimpleSAML_Auth_ProcessingChain::AUTHPARAM];
+
+	// sanitize the input
+	$sid = SimpleSAML_Utilities::parseStateID($authProcId);
+	if (!is_null($sid['url'])) {
+		SimpleSAML_Utilities::checkURLAllowed($sid['url']);
+	}
+
 	$authProcState = SimpleSAML_Auth_ProcessingChain::fetchProcessedState($authProcId);
 	finishLogin($authProcState);
 }
@@ -93,7 +109,7 @@ try {
 	if($info === NULL) {
 		/* Fall back to RelayState. */
 		$info = array();
-		$info['RelayState'] = $response->getRelayState();
+		$info['RelayState'] = SimpleSAML_Utilities::checkURLAllowed($response->getRelayState());
 		if(empty($info['RelayState'])) {
 			$info['RelayState'] = $spMetadata->getString('RelayState', NULL);
 		}
@@ -116,7 +132,7 @@ try {
 		$status = $response->getStatus();
 		if(array_key_exists('OnError', $info)) {
 			/* We have an error handler. Return the error to it. */
-			SimpleSAML_Utilities::redirect($info['OnError'], array('StatusCode' => $status['Code']));
+			SimpleSAML_Utilities::redirectTrustedURL($info['OnError'], array('StatusCode' => $status['Code']));
 		}
 
 		/* We don't have an error handler. Show an error page. */

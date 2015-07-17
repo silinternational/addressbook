@@ -20,9 +20,6 @@ if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
 // Bring in the necessary Yii file.
 require_once($yii);
 
-// Load and merge the config data.
-$configMain = require __DIR__.'/../protected/config/main.php';
-$configEnv = require __DIR__.'/../protected/config/local.php';
-$config = CMap::mergeArray($configMain, $configEnv);
+$config = require __DIR__.'/../protected/config/main.php';
 
 Yii::createWebApplication($config)->run();

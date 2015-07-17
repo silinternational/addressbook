@@ -1,0 +1,28 @@
+data:
+    image: silintl/data-volume:latest
+    volumes:
+        - /data:/data
+web:
+    build: .
+    volumes_from:
+         - data
+    ports:
+        - "80:80"
+    env_file:
+        - ./common.env
+        - ./local.env
+composer:
+    image: silintl/php-cli:latest
+    volumes_from:
+        - data
+    working_dir: /data
+    command: composer install --prefer-dist
+phpunit:
+    image: silintl/php-cli:latest
+    volumes_from:
+        - data
+    working_dir: /data/protected/tests
+    env_file:
+        - ./common.env
+        - ./local.env
+    command: ./phpunit unit/

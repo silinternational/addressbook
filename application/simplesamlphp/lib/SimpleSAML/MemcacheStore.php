@@ -9,7 +9,6 @@
  *
  * @author Olav Morken, UNINETT AS.
  * @package simpleSAMLphp
- * @version $Id: MemcacheStore.php 2418 2010-07-13 11:56:17Z olavmrk $
  * @deprecated This class will be removed in version 1.8 of simpleSAMLphp.
  */
 class SimpleSAML_MemcacheStore {

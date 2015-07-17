@@ -1,11 +1,20 @@
 <?php
 
+/**
+ * WARNING:
+ *
+ * THIS FILE IS DEPRECATED AND WILL BE REMOVED IN FUTURE VERSIONS
+ *
+ * @deprecated
+ */
 
 require_once('../_include.php');
 
 $config = SimpleSAML_Configuration::getInstance();
 $metadata = SimpleSAML_Metadata_MetaDataStorageHandler::getMetadataHandler();
-$session = SimpleSAML_Session::getInstance();
+$session = SimpleSAML_Session::getSessionFromRequest();
+
+SimpleSAML_Logger::warning('The file auth/login-admin.php is deprecated and will be removed in future versions.');
 
 SimpleSAML_Logger::info('AUTH -admin: Accessing auth endpoint login-admin');
 
@@ -20,7 +29,7 @@ if (!array_key_exists('RelayState', $_REQUEST)) {
 	throw new SimpleSAML_Error_Error('NORELAYSTATE');
 }
 
-$relaystate = $_REQUEST['RelayState'];
+$relaystate = SimpleSAML_Utilities::checkURLAllowed($_REQUEST['RelayState']);
 
 $correctpassword = $config->getString('auth.adminpassword', '123');
 
@@ -59,7 +68,7 @@ if (isset($_POST['password'])) {
 		else 
 			SimpleSAML_Logger::stats('AUTH-login-admin OK');
 		
-		SimpleSAML_Utilities::redirect($relaystate);
+		SimpleSAML_Utilities::redirectTrustedURL($relaystate);
 		exit(0);
 	} else {
 		SimpleSAML_Logger::stats('AUTH-login-admin Failed');
@@ -82,6 +91,3 @@ if (isset($error)) {
 }
 
 $t->show();
-
-
-?>
