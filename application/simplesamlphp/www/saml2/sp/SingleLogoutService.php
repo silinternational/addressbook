@@ -1,12 +1,22 @@
 <?php
 
+/**
+ * WARNING:
+ *
+ * THIS FILE IS DEPRECATED AND WILL BE REMOVED IN FUTURE VERSIONS
+ *
+ * @deprecated
+ */
+
 require_once('../../_include.php');
 
 $config = SimpleSAML_Configuration::getInstance();
 $metadata = SimpleSAML_Metadata_MetaDataStorageHandler::getMetadataHandler();
 
+SimpleSAML_Logger::warning('The file saml2/sp/SingleLogoutService.php is deprecated and will be removed in future versions.');
+
 // Get the local session
-$session = SimpleSAML_Session::getInstance();
+$session = SimpleSAML_Session::getSessionFromRequest();
 
 
 SimpleSAML_Logger::info('SAML2.0 - SP.SingleLogoutService: Accessing SAML 2.0 SP endpoint SingleLogoutService');
@@ -52,8 +62,22 @@ if ($message instanceof SAML2_LogoutRequest) {
 
 		SimpleSAML_Logger::info('SAML2.0 - SP.SingleLogoutService: SP me (' . $spEntityId . ') is sending logout response to IdP (' . $idpEntityId . ')');
 
+		$dst = $idpMetadata->getEndpointPrioritizedByBinding('SingleLogoutService', array(
+			SAML2_Const::BINDING_HTTP_REDIRECT,
+			SAML2_Const::BINDING_HTTP_POST)
+		);
+   
+		if (!$binding instanceof SAML2_SOAP) {
+			$binding = SAML2_Binding::getBinding($dst['Binding']);
+			if (isset($dst['ResponseLocation'])) {
+				$dst = $dst['ResponseLocation'];
+			} else {
+				$dst = $dst['Location'];
+			}
+			$binding->setDestination($dst);
+		}
+
 		/* Send response. */
-		$binding = new SAML2_HTTPRedirect();
 		$binding->send($lr);
 	} catch (Exception $exception) {
 		throw new SimpleSAML_Error_Error('LOGOUTREQUEST', $exception);
@@ -69,17 +93,16 @@ if ($message instanceof SAML2_LogoutRequest) {
 		$id = $message->getInResponseTo();
 	}
 
+	// 'spLogoutReturnTo' is checked before storing it in the
+	// session, so we trust it here.
 	$returnTo = $session->getData('spLogoutReturnTo', $id);
 	if (empty($returnTo)) {
 		throw new SimpleSAML_Error_Error('LOGOUTINFOLOST');
 	}
 
-	SimpleSAML_Utilities::redirect($returnTo);
+	SimpleSAML_Utilities::redirectTrustedURL($returnTo);
 
 } else {
 	throw new SimpleSAML_Error_Error('SLOSERVICEPARAMS');
 }
 
-
-
-?>

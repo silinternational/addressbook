@@ -1,13 +1,12 @@
 <?php
 
 /**
- * This class implements the dynamic SAML profile, where the entityID equals an URL where metadata is located.
- * The XML files should be in the SAML 2.0 metadata format.
+ * This class implements the dynamic SAML profile, where the entityID equals a URL where
+ * metadata is located. The XML files should be in the SAML 2.0 metadata format.
  *
  * @author Andreas Åkre Solberg, UNINETT AS.
  * @author Olav Morken, UNINETT AS.
  * @package simpleSAMLphp
- * @version $Id$
  */
 class SimpleSAML_Metadata_MetaDataStorageHandlerDynamicXML extends SimpleSAML_Metadata_MetaDataStorageSource {
 
@@ -204,7 +203,7 @@ class SimpleSAML_Metadata_MetaDataStorageHandlerDynamicXML extends SimpleSAML_Me
 		assert('is_string($set)');
 
 		if (!preg_match('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?)@', $index)) {
-			SimpleSAML_Logger::info('MetaData - Handler.DynamicXML: EntityID/index [' . $index . '] does not look like an URL. Skipping.' );
+			SimpleSAML_Logger::info('MetaData - Handler.DynamicXML: EntityID/index [' . $index . '] does not look like a URL. Skipping.' );
 			return NULL;
 		}
 

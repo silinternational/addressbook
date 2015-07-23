@@ -1,11 +1,20 @@
 <?php
 
+/**
+ * WARNING:
+ *
+ * THIS FILE IS DEPRECATED AND WILL BE REMOVED IN FUTURE VERSIONS
+ *
+ * @deprecated
+ */
+
 require_once('../../_include.php');
 
 $config = SimpleSAML_Configuration::getInstance();
 $metadata = SimpleSAML_Metadata_MetaDataStorageHandler::getMetadataHandler();
-$session = SimpleSAML_Session::getInstance();
+$session = SimpleSAML_Session::getSessionFromRequest();
 
+SimpleSAML_Logger::warning('The file saml2/sp/initSSO.php is deprecated and will be removed in future versions.');
 
 SimpleSAML_Logger::info('SAML2.0 - SP.initSSO: Accessing SAML 2.0 SP initSSO script');
 
@@ -23,6 +32,7 @@ if (!$config->getBoolean('enable.saml20-sp', TRUE))
 if (empty($_GET['RelayState'])) {
 	throw new SimpleSAML_Error_Error('NORELAYSTATE');
 }
+$returnTo = SimpleSAML_Utilities::checkURLAllowed($_GET['RelayState']);
 
 $reachableIDPs = array();
 
@@ -92,11 +102,9 @@ if ($idpentityid === NULL) {
 		$discourl = SimpleSAML_Utilities::getBaseURL() . 'saml2/sp/idpdisco.php';
 	}
 
-	if ($config->getBoolean('idpdisco.extDiscoveryStorage', NULL) != NULL) {
-		
-		$extDiscoveryStorage = $config->getBoolean('idpdisco.extDiscoveryStorage');
-		
-		SimpleSAML_Utilities::redirect($extDiscoveryStorage, array(
+	$extDiscoveryStorage = $config->getString('idpdisco.extDiscoveryStorage', NULL);
+	if ($extDiscoveryStorage !== NULL) {
+		SimpleSAML_Utilities::redirectTrustedURL($extDiscoveryStorage, array(
 			'entityID' => $spentityid,
 			'return' => SimpleSAML_Utilities::addURLparameter($discourl, array(
 				'return' => SimpleSAML_Utilities::selfURL(),
@@ -120,7 +128,7 @@ if ($idpentityid === NULL) {
 		$discoparameters['IDPList'] = $reachableIDPs;
 	}
 
-	SimpleSAML_Utilities::redirect($discourl, $discoparameters);
+	SimpleSAML_Utilities::redirectTrustedURL($discourl, $discoparameters);
 }
 
 
@@ -136,7 +144,7 @@ try {
 
 	$assertionConsumerServiceURL = $metadata->getGenerated('AssertionConsumerService', 'saml20-sp-hosted');
 	$ar->setAssertionConsumerServiceURL($assertionConsumerServiceURL);
-	$ar->setRelayState($_REQUEST['RelayState']);
+	$ar->setRelayState($returnTo);
 
 	if ($isPassive) {
 		$ar->setIsPassive(TRUE);
@@ -158,17 +166,24 @@ try {
 
 	/* Save request information. */
 	$info = array();
-	$info['RelayState'] = $_REQUEST['RelayState'];
+	$info['RelayState'] = $returnTo;
 	if(array_key_exists('OnError', $_REQUEST)) {
-		$info['OnError'] = $_REQUEST['OnError'];
+		$info['OnError'] = SimpleSAML_Utilities::checkURLAllowed($_REQUEST['OnError']);
 	}
 	$session->setData('SAML2:SP:SSO:Info', $ar->getId(), $info);
 
-	$b = new SAML2_HTTPRedirect();
+	/* Select appropriate SSO endpoint */
+	if ($ar->getProtocolBinding() === SAML2_Const::BINDING_HOK_SSO) {
+		$dst = $idpMetadata->getDefaultEndpoint('SingleSignOnService', array(SAML2_Const::BINDING_HOK_SSO));
+	} else {
+		$dst = $idpMetadata->getDefaultEndpoint('SingleSignOnService', array(SAML2_Const::BINDING_HTTP_REDIRECT, SAML2_Const::BINDING_HTTP_POST));
+	}
+	$ar->setDestination($dst['Location']);
+
+	$b = SAML2_Binding::getBinding($dst['Binding']);
 	$b->send($ar);
 
 } catch(Exception $exception) {
 	throw new SimpleSAML_Error_Error('CREATEREQUEST', $exception);
 }
 
-?>

@@ -1,7 +1,10 @@
 <?php
 
-// uncomment the following to define a path alias
-// Yii::setPathOfAlias('local','path/to/local-folder');
+$API_BASE_URL = getenv('API_BASE_URL') ?: null;
+$API_KEY = getenv('API_KEY') ?: null;
+$API_SECRET = getenv('API_SECRET') ?: null;
+$GA_ENABLED = getenv('GA_ENABLED') ?: false;
+$GA_TRACKING_ID = getenv('GA_TRACKING_ID') ?: null;
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
@@ -18,15 +21,7 @@ return array(
         'application.components.*',
     ),
     'modules' => array(
-    // uncomment the following to enable the Gii tool
-    /*
-      'gii'=>array(
-      'class'=>'system.gii.GiiModule',
-      'password'=>'Enter Your Password Here',
-      // If removed, Gii defaults to localhost only. Edit carefully to taste.
-      'ipFilters'=>array('127.0.0.1','::1'),
-      ),
-     */
+
     ),
     
     // Application components:
@@ -56,12 +51,6 @@ return array(
                     'levels' => 'error, warning',
                     //'levels' => 'error, warning, profile, info, trace',
                 ),
-                // uncomment the following to show log messages on web pages
-                /*
-                array(
-                    'class'=>'CWebLogRoute',
-                ),
-                */
             ),
         ),
         'request' => array(
@@ -87,6 +76,13 @@ return array(
         ),
         'copyAttributes' => array(
             'first', 'last', 'email', 'phone', 'entity', 'spouse', 'manager',
+        ),
+        "apiBaseUrl" => $API_BASE_URL,
+        "apiKey" => $API_KEY,
+        "apiSecret" => $API_SECRET,
+        "google_analytics" => array(
+            "enabled" => $GA_ENABLED,
+            "tracking_id" => $GA_TRACKING_ID,
         ),
     ),
 );

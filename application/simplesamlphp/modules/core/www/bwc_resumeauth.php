@@ -5,7 +5,7 @@ if (!isset($_REQUEST['RequestID'])) {
 }
 
 /* Backwards-compatibility with old authentication pages. */
-$session = SimpleSAML_Session::getInstance();
+$session = SimpleSAML_Session::getSessionFromRequest();
 $requestcache = $session->getAuthnRequest('saml2', (string)$_REQUEST['RequestID']);
 if (!$requestcache) {
 	throw new Exception('Could not retrieve cached RequestID = ' . $authId);
@@ -20,7 +20,7 @@ if ($requestcache['ForceAuthn'] && $requestcache['core:prevSession'] === $sessio
 }
 
 if (isset($state['ReturnTo'])) {
-	SimpleSAML_Utilities::redirect($state['ReturnTo']);
+	SimpleSAML_Utilities::redirectTrustedURL($state['ReturnTo']);
 }
 
 foreach ($session->getAuthState($authority) as $k => $v) {

@@ -15,7 +15,6 @@
  *
  * @author Olav Morken, UNINETT AS.
  * @package simpleSAMLphp
- * @version $Id$
  */
 class SimpleSAML_Memcache {
 
@@ -46,7 +45,7 @@ class SimpleSAML_Memcache {
 				continue;
 			}
 
-			/* Deserialize the object. */
+			/* Unserialize the object. */
 			$info = unserialize($serializedInfo);
 
 			/*
