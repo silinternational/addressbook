@@ -1,6 +1,14 @@
 <?php
 
 /**
+ * WARNING:
+ *
+ * THIS FILE IS DEPRECATED AND WILL BE REMOVED IN FUTURE VERSIONS
+ *
+ * @deprecated
+ */
+
+/**
  * This file is part of SimpleSAMLphp. See the file COPYING in the
  * root of the distribution for licence information.
  *
@@ -8,13 +16,14 @@
  *
  * @author Mads Freek, RUC. 
  * @package simpleSAMLphp
- * @version $Id$
  */
  
 require_once('../_include.php');
 
 $config = SimpleSAML_Configuration::getInstance();
-$session = SimpleSAML_Session::getInstance();
+$session = SimpleSAML_Session::getSessionFromRequest();
+
+SimpleSAML_Logger::warning('The file auth/login-cas-ldap.php is deprecated and will be removed in future versions.');
 
 try {
 	$metadata = SimpleSAML_Metadata_MetaDataStorageHandler::getMetadataHandler();
@@ -30,8 +39,6 @@ try {
 
 	$casconfig = $casldapconfig[$idpentityid]['cas'];
 	$ldapconfig = $casldapconfig[$idpentityid]['ldap'];
-	
-	
 } catch (Exception $exception) {
 	throw new SimpleSAML_Error_Error('METADATA', $exception);
 }
@@ -43,8 +50,6 @@ try {
 if (!array_key_exists('RelayState', $_REQUEST)) {
 	throw new SimpleSAML_Error_Error('NORELAYSTATE');
 }
-
-
 
 function casValidate($cas) {
 
@@ -104,18 +109,13 @@ function casValidate($cas) {
 	 */
 	} else {
 		SimpleSAML_Logger::info("AUTH - cas-ldap: redirecting to {$cas['login']}");
-		SimpleSAML_Utilities::redirect($cas['login'], array(
+		SimpleSAML_Utilities::redirectTrustedURL($cas['login'], array(
 			'service' => $service
 		));		
 	}
 }
 
-
-
 try {
-	
-	$relaystate = $_REQUEST['RelayState'];
-
 	list($username, $casattributes) = casValidate($casconfig);
 	
 	SimpleSAML_Logger::info('AUTH - cas-ldap: '. $username . ' authenticated by ' . $casconfig['validate']);
@@ -132,11 +132,9 @@ try {
 	$session->setNameID(array(
 			'value' => SimpleSAML_Utilities::generateID(),
 			'Format' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient'));
-	SimpleSAML_Utilities::redirect($relaystate);
+
+	SimpleSAML_Utilities::redirectUntrustedURL($_REQUEST['RelayState']);
 
 } catch(Exception $exception) {
 	throw new SimpleSAML_Error_Error('CASERROR', $exception);
 }
-
-
-?>

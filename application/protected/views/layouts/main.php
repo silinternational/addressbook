@@ -58,5 +58,8 @@
         ZeroClipboard.destroy();
     } );
 </script>
+<?php
+    $this->renderPartial('//partials/google-analytics', array('user' => Yii::app()->user));
+?>
 </body>
 </html>

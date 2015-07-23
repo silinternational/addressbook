@@ -1,10 +1,20 @@
 <?php
 
+/**
+ * WARNING:
+ *
+ * THIS FILE IS DEPRECATED AND WILL BE REMOVED IN FUTURE VERSIONS
+ *
+ * @deprecated
+ */
+
 require_once('../../_include.php');
 
 /* Load simpleSAMLphp, configuration and metadata */
 $config = SimpleSAML_Configuration::getInstance();
 $metadata = SimpleSAML_Metadata_MetaDataStorageHandler::getMetadataHandler();
+
+SimpleSAML_Logger::warning('The file saml2/sp/metadata.php is deprecated and will be removed in future versions.');
 
 
 if (!$config->getValue('enable.saml20-sp', TRUE))
@@ -25,8 +35,24 @@ try {
 		'metadata-set' => 'saml20-sp-remote',
 		'entityid' => $spentityid,
 		'AssertionConsumerService' => $metadata->getGenerated('AssertionConsumerService', 'saml20-sp-hosted'),
-		'SingleLogoutService' => $metadata->getGenerated('SingleLogoutService', 'saml20-sp-hosted'),
 	);
+
+    $slob = $metadata->getGenerated('SingleLogoutServiceBinding', 'saml20-sp-hosted');
+    $slol = $metadata->getGenerated('SingleLogoutService', 'saml20-sp-hosted');
+
+	if (is_array($slob)) {
+		foreach ($slob as $binding) {
+			$metaArray['SingleLogoutService'][] = array(
+				'Binding' => $binding,
+				'Location' => $slol,
+			);
+		}
+	} else {
+		$metaArray['SingleLogoutService'][] = array(
+			'Binding' => $slob,
+			'Location' => $slol,
+		);
+	}
 
 	$metaArray['NameIDFormat'] = $spmeta->getString('NameIDFormat', 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient');
 
@@ -97,4 +123,3 @@ try {
 
 }
 
-?>
