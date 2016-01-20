@@ -1,0 +1,15 @@
+addressbook:
+    build:
+        image: 369020531563.dkr.ecr.us-east-1.amazonaws.com/gtis/addressbook
+        dockerfile_path: ./Dockerfile
+    working_dir: /data
+    command: /data/run-tests.sh
+
+ecsdeploy:
+    image: silintl/ecs-deploy:latest
+    encrypted_env_file: aws.env.encrypted
+
+aws_generator:
+    image: codeship/aws-ecr-dockercfg-generator
+    encrypted_env_file: aws.env.encrypted
+    add_docker: true

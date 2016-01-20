@@ -1,7 +1,7 @@
 FROM silintl/php-web:latest
 MAINTAINER Phillip Shipley <phillip_shipley@sil.org>
 
-ENV REFRESHED_AT 2015-07-17
+ENV REFRESHED_AT 2016-01-20
 
 # Make sure /data is available
 RUN mkdir -p /data
@@ -21,7 +21,7 @@ COPY build/php.ini /etc/php5/cli/
 COPY application/ /data/
 
 # Copy SAML cert files into appropriate place
-COPY build/saml.* /data/simplesamlphp/cert/
+#COPY build/saml.* /data/simplesamlphp/cert/
 
 WORKDIR /data
 

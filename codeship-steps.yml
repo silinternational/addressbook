@@ -1,0 +1,31 @@
+- name: test
+  service: addressbook
+  command: /data/run-tests.sh
+
+- name: push_develop
+  service: addressbook
+  type: push
+  image_name: 369020531563.dkr.ecr.us-east-1.amazonaws.com/gtis/addressbook
+  image_tag: "{{.Timestamp}}"
+  tag: develop
+  registry: https://369020531563.dkr.ecr.us-east-1.amazonaws.com
+  dockercfg_service: aws_generator
+
+- name: push_production
+  service: addressbook
+  type: push
+  image_name: 369020531563.dkr.ecr.us-east-1.amazonaws.com/gtis/addressbook
+  image_tag: "{{.Timestamp}}"
+  tag: master
+  registry: https://369020531563.dkr.ecr.us-east-1.amazonaws.com
+  dockercfg_service: aws_generator
+
+- name: deploy_staging
+  service: ecsdeploy
+  tag: develop
+  command: "-c staging1 -n addressbook -i 369020531563.dkr.ecr.us-east-1.amazonaws.com/gtis/addressbook -e CI_TIMESTAMP -t 300"
+
+- name: deploy_production
+  service: ecsdeploy
+  tag: master
+  command: "-c production1 -n addressbook -i 369020531563.dkr.ecr.us-east-1.amazonaws.com/gtis/addressbook -e CI_TIMESTAMP -t 300"

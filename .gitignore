@@ -11,3 +11,5 @@ composer.phar
 build/saml.crt
 build/saml.pem
 local.env
+aws.env
+*.aes
