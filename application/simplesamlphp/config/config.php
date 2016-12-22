@@ -10,7 +10,7 @@ $ADMIN_PASSWORD = getenv('SAML_ADMIN_PASSWORD');
 $SECRET_SALT = getenv('SAML_SECRET_SALT');
 $CONTACT_NAME = getenv('SAML_CONTACT_NAME');
 $CONTACT_EMAIL = getenv('SAML_CONTACT_EMAIL');
-
+$SECURE_COOKIE = Env::get('SECURE_COOKIE', true);
 
 $config = array (
 
@@ -206,7 +206,7 @@ $config = array (
     /*
      * Option to override the default settings for the session cookie name
      */
-    'session.cookie.name' => 'SimpleSAMLSessionID',
+    'session.cookie.name' => 'SAMLSessionID',
 
     /*
      * Expiration time for the session cookie, in seconds.
@@ -245,7 +245,7 @@ $config = array (
      * through https. If the user can access the service through
      * both http and https, this must be set to FALSE.
      */
-    'session.cookie.secure' => FALSE,
+    'session.cookie.secure' => $SECURE_COOKIE,
 
     /*
      * When set to FALSE fallback to transient session on session initialization
@@ -617,7 +617,7 @@ $config = array (
      * Metadata signing can also be enabled for a individual SP or IdP by setting the
      * same option in the metadata for the SP or IdP.
      */
-    'metadata.sign.enable' => FALSE,
+    'metadata.sign.enable' => true,
 
     /*
      * The default key & certificate which should be used to sign generated metadata. These
@@ -629,9 +629,9 @@ $config = array (
      * the 'certificate' and 'privatekey' option in the metadata will be used.
      * if those aren't set, signing of metadata will fail.
      */
-    'metadata.sign.privatekey' => NULL,
+    'metadata.sign.privatekey' => 'saml.pem',
     'metadata.sign.privatekey_pass' => NULL,
-    'metadata.sign.certificate' => NULL,
+    'metadata.sign.certificate' => 'saml.crt',
 
 
     /*

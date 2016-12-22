@@ -25,6 +25,7 @@ $metadata[$IDP] = array(
     ),
     'SingleLogoutService' => $SLO_URL,
     'certFingerprint' => $CERT_FINGERPRINT,
+    'assertion.encryption' => true,
     'NameIDFormat' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
     'OrganizationName' => $ORG_NAME,
     'OrganizationDisplayName' => $ORG_NAME,
