@@ -10,7 +10,7 @@ $ADMIN_PASSWORD = getenv('SAML_ADMIN_PASSWORD');
 $SECRET_SALT = getenv('SAML_SECRET_SALT');
 $CONTACT_NAME = getenv('SAML_CONTACT_NAME');
 $CONTACT_EMAIL = getenv('SAML_CONTACT_EMAIL');
-$SECURE_COOKIE = Env::get('SECURE_COOKIE', true);
+$SECURE_COOKIE = getenv('SECURE_COOKIE') ?: true;
 
 $config = array (
 
