@@ -17,6 +17,10 @@ COPY build/rsyslog.conf /etc/rsyslog.conf
 COPY build/php.ini /etc/php5/apache2/
 COPY build/php.ini /etc/php5/cli/
 
+# get s3-expand
+RUN curl https://raw.githubusercontent.com/silinternational/s3-expand/1.5/s3-expand -o /usr/local/bin/s3-expand \
+    && chmod a+x /usr/local/bin/s3-expand
+
 # It is expected that /data is = application/ in project folder
 COPY application/ /data/
 
@@ -34,4 +38,5 @@ RUN chown -R www-data:www-data \
 RUN composer install --prefer-dist --no-interaction --no-dev --optimize-autoloader
 
 EXPOSE 80
+ENTRYPOINT ["/usr/local/bin/s3-expand"]
 CMD ["/data/run.sh"]

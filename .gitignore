@@ -13,3 +13,5 @@ build/saml.pem
 local.env
 aws.env
 *.aes
+*.crt
+*.pem
