@@ -33,4 +33,4 @@
 - name: track_deployment
   service: tracker
   tag: ^(master|develop)
-  command: "php /data/track.php"
+  command: "true"
