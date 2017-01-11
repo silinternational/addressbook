@@ -29,3 +29,8 @@
   service: ecsdeploy
   tag: master
   command: "-c production1 -n addressbook -i 369020531563.dkr.ecr.us-east-1.amazonaws.com/gtis/addressbook -e CI_TIMESTAMP -t 300"
+
+- name: track_deployment
+  service: tracker
+  tag: ^(master|develop)
+  command: "true"

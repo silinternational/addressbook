@@ -12,6 +12,7 @@ build/saml.crt
 build/saml.pem
 local.env
 aws.env
+tracking.env
 *.aes
 *.crt
 *.pem
