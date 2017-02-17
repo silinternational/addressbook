@@ -14,6 +14,10 @@ $ORG_URL = getenv('SAML_ORG_URL') ?: 'https://openidp.feide.no';
  *
  * See: https://rnd.feide.no/content/idp-remote-metadata-reference
  */
+ 
+
+$ASSERTION_ENCRYPTION = getenv('ASSERTION_ENCRYPTION') ?: true;
+ 
 $metadata[$IDP] = array(
     'metadata-set' => 'saml20-idp-remote',
     'entityid' => $IDP,
@@ -25,7 +29,7 @@ $metadata[$IDP] = array(
     ),
     'SingleLogoutService' => $SLO_URL,
     'certFingerprint' => $CERT_FINGERPRINT,
-    'assertion.encryption' => true,
+    'assertion.encryption' => $ASSERTION_ENCRYPTION,
     'sign.authnrequest' => true,
     'sign.logout' => true,
     'redirect.sign' => true,
