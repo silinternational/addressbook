@@ -1,16 +1,19 @@
 <?php
+
+use Sil\PhpEnv\Env;
+
 /* 
  * The configuration of simpleSAMLphp
  * 
  * $Id: config.php 3171 2012-09-25 08:54:06Z jaimepc@gmail.com $
  */
 
-$BASE_URL = getenv('SAML_BASE_URL') ?: 'simplesaml/';
-$ADMIN_PASSWORD = getenv('SAML_ADMIN_PASSWORD');
-$SECRET_SALT = getenv('SAML_SECRET_SALT');
-$CONTACT_NAME = getenv('SAML_CONTACT_NAME');
-$CONTACT_EMAIL = getenv('SAML_CONTACT_EMAIL');
-$SECURE_COOKIE = getenv('SECURE_COOKIE') ?: true;
+$BASE_URL = Env::get('SAML_BASE_URL', 'simplesaml/');
+$ADMIN_PASSWORD = Env::get('SAML_ADMIN_PASSWORD');
+$SECRET_SALT = Env::get('SAML_SECRET_SALT');
+$CONTACT_NAME = Env::get('SAML_CONTACT_NAME');
+$CONTACT_EMAIL = Env::get('SAML_CONTACT_EMAIL');
+$SECURE_COOKIE = Env::get('SECURE_COOKIE', true);
 
 $config = array (
 

@@ -1,11 +1,14 @@
 <?php
 
-$IDP = getenv('SAML_IDP') ?: 'https://openidp.feide.no';
-$SSO_URL = getenv('SAML_SSO_URL') ?: 'https://openidp.feide.no/simplesaml/saml2/idp/SSOService.php';
-$SLO_URL = getenv('SAML_SLO_URL') ?: 'https://openidp.feide.no/simplesaml/saml2/idp/SingleLogoutService.php';
-$CERT_FINGERPRINT = getenv('SAML_CERT_FINGERPRINT') ?: 'c9ed4dfb07caf13fc21e0fec1572047eb8a7a4cb';
-$ORG_NAME = getenv('SAML_ORG_NAME') ?: 'OpenIdP';
-$ORG_URL = getenv('SAML_ORG_URL') ?: 'https://openidp.feide.no';
+use Sil\PhpEnv\Env;
+
+$IDP = Env::get('SAML_IDP', 'https://openidp.feide.no');
+$SSO_URL = Env::get('SAML_SSO_URL', 'https://openidp.feide.no/simplesaml/saml2/idp/SSOService.php');
+$SLO_URL = Env::get('SAML_SLO_URL', 'https://openidp.feide.no/simplesaml/saml2/idp/SingleLogoutService.php');
+$CERT_FINGERPRINT = Env::get('SAML_CERT_FINGERPRINT', 'c9ed4dfb07caf13fc21e0fec1572047eb8a7a4cb');
+$ORG_NAME = Env::get('SAML_ORG_NAME', 'OpenIdP');
+$ORG_URL = Env::get('SAML_ORG_URL', 'https://openidp.feide.no');
+$ASSERTION_ENCRYPTION = Env::get('ASSERTION_ENCRYPTION', true);
 
 /**
  * SAML 2.0 remote IdP metadata for simpleSAMLphp.
@@ -16,7 +19,6 @@ $ORG_URL = getenv('SAML_ORG_URL') ?: 'https://openidp.feide.no';
  */
  
 
-$ASSERTION_ENCRYPTION = getenv('ASSERTION_ENCRYPTION') ?: true;
  
 $metadata[$IDP] = array(
     'metadata-set' => 'saml20-idp-remote',
