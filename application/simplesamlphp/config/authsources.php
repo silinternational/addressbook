@@ -34,6 +34,9 @@ $config = array(
         // certs for signing / decrypting
         'privatekey' => 'saml.pem',
         'certificate' => 'saml.crt',
+        
+        // Let the Hub append the idp to the NameID
+        'NameIDPolicy' => "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent",
     ),
 
 );
