@@ -116,6 +116,7 @@ class SiteController extends Controller {
             'model' => $model,
             'results' => (isset($results) ? $results : NULL),
             'advanced' => $didAdvancedSearch,
+            'warningHtml' => Yii::app()->params['warningHtml'],
         ));
     }
 

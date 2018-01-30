@@ -3,6 +3,7 @@
 /* @var $model SearchForm */
 /* @var $results array */
 /* @var $this SiteController */
+/* @var $warningHtml string */
 
 // Show any search values in the page title.
 $activeSearchValues = $model->getActiveSearchValuesAsString();
@@ -12,6 +13,13 @@ $this->pageTitle = Yii::app()->name .
                     '');
 
 ?>
+<?php if (! empty($warningHtml)): ?>
+    <div class="container">
+        <div class="alert alert-warning">
+            <?= $warningHtml ?>
+        </div>
+    </div>
+<?php endif; ?>
 <div id="search-forms-container">
     <?php
     echo CHtml::errorSummary($model,
