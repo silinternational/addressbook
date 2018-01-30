@@ -6,4 +6,4 @@ composer install --prefer-dist --no-interaction
 
 # Run unit tests
 cd /data/protected/tests
-./phpunit unit/
+../../vendor/bin/phpunit unit/

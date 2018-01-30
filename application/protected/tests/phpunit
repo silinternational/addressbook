@@ -1,1 +1,2 @@
-../../vendor/bin/phpunit
+#!/bin/bash
+../../vendor/bin/phpunit $@

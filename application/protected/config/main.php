@@ -5,6 +5,7 @@ $API_KEY = getenv('API_KEY') ?: null;
 $API_SECRET = getenv('API_SECRET') ?: null;
 $GA_ENABLED = getenv('GA_ENABLED') ?: false;
 $GA_TRACKING_ID = getenv('GA_TRACKING_ID') ?: null;
+$WARNING_HTML = getenv('WARNING_HTML') ?: null;
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
@@ -84,5 +85,6 @@ return array(
             "enabled" => $GA_ENABLED,
             "tracking_id" => $GA_TRACKING_ID,
         ),
+        'warningHtml' => $WARNING_HTML,
     ),
 );
