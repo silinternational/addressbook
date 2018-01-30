@@ -4,7 +4,8 @@
         "guzzle/guzzle": "~3.7",
         "forevermatt/calc-api-sig": "0.1.*",
         "zeroclipboard/zeroclipboard": "2.1.*",
-        "silinternational/opsworks-deploy": "dev-master"
+        "silinternational/opsworks-deploy": "dev-master",
+        "silinternational/php-env": "0.2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
