@@ -1,7 +1,7 @@
 data:
     image: silintl/data-volume:latest
     volumes:
-        - /data:/data
+        - ./application:/data
 web:
     build: .
     volumes_from:
